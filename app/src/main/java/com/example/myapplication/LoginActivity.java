@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,14 +29,17 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if(ParseUser.getCurrentUser() != null)
+        {
+            goMainActivity();
+        }
+
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener()
-        {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Log.i(TAG, "onClick login button");
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
@@ -43,6 +47,7 @@ public class LoginActivity extends AppCompatActivity
             }
         });
     }
+
         private void loginUser(String username, String password)
         {
             Log.i(TAG, "Attempting to login user " + username);
@@ -55,10 +60,13 @@ public class LoginActivity extends AppCompatActivity
                     if (e != null)
                     {
                         Log.i(TAG, "Issue with login", e);
+                        Toast.makeText(LoginActivity.this, "Issue With Login", Toast.LENGTH_SHORT).show();
+
                         return;
                     }
                     goMainActivity();
-                    Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT);
+                    Log.i(TAG, "Success", e);
+                    Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -67,6 +75,7 @@ public class LoginActivity extends AppCompatActivity
     {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+        finish();
     }
 
 }
