@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.simpleinsta;
 
 import org.junit.Test;
 

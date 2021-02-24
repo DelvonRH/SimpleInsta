@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.simpleinsta;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -34,8 +35,9 @@ public class MainActivity extends AppCompatActivity
     public static final String TAG = "MainActivity";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private EditText etDescription;
-    private Button btnCaptureImage, btnSubmit;
+    private Button btnCaptureImage, btnSubmit, btnSignOut;
     private ImageView ivPostImage;
+    private ProgressBar progressBar;
     private File photoFile;
     public String photoFileName = "photo.jpg";
 
@@ -49,6 +51,20 @@ public class MainActivity extends AppCompatActivity
         btnCaptureImage = findViewById(R.id.btnCaptureImage);
         btnSubmit = findViewById(R.id.btnSubmit);
         ivPostImage = findViewById(R.id.ivPostImage);
+        btnSignOut = findViewById(R.id.btnSignOut);
+        progressBar = findViewById(R.id.progressBar);
+
+        btnSignOut.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                ParseUser.logOutInBackground();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +80,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                progressBar.setVisibility(View.VISIBLE);
                 String description = etDescription.getText().toString();
                 if (description.isEmpty())
                 {
@@ -151,6 +168,7 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(MainActivity.this, "Error while saving!", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Post save was successful!!!");
+                progressBar.setVisibility(View.GONE);
                 etDescription.setText("");
                 ivPostImage.setImageResource(0);
             }
