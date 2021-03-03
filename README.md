@@ -1,4 +1,4 @@
-# Project 3 - *SimpleInsta*
+# Project 3 - *SimpleInsta - Part I*
 
 **SimpleInsta** is a photo sharing app similar to Instagram but using Parse as its backend.
 
