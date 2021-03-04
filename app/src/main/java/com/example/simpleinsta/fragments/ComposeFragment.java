@@ -45,7 +45,7 @@ public class ComposeFragment extends Fragment
     public static final String TAG = "ComposeFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private EditText etDescription;
-    private Button btnCaptureImage, btnSubmit, btnSignOut;
+    private Button btnCaptureImage, btnSubmit;
     private ImageView ivPostImage;
     private ProgressBar progressBar;
     private File photoFile;
@@ -74,20 +74,8 @@ public class ComposeFragment extends Fragment
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         ivPostImage = view.findViewById(R.id.ivPostImage);
-        btnSignOut = view.findViewById(R.id.btnSignOut);
+        //btnSignOut = view.findViewById(R.id.btnSignOut);
         progressBar = view.findViewById(R.id.progressBar);
-
-        btnSignOut.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                ParseUser.logOutInBackground();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
